@@ -1,0 +1,114 @@
+<!--<p>bookmark works!</p>-->
+<!--<div class="terminal">-->
+<!--  <pre>ng generate component xyz</pre>-->
+<!--</div>-->
+
+<div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-6">
+          <p class="bold">To do Items</p>
+          <br/>
+          <div class="card">
+            <div class="card-body">
+              <div class="scrollbar scrollbox scrollbar-sidebar scrollbar-container ps ps--active-y ps--scrolling-y">
+                <ul class="list-group ul-list scrollbox-content overflow">
+                  <li class="list-group-item" *ngFor="let task of tasks | orderBy : 'date': true">
+                    <div>
+                      <input type="checkbox" class="form-check-input" id="task.id" [checked]="!task?.status" [value]="task?.status"
+                             (change)="onCheckChange(task, $event)">
+                      <label class="form-check-label" for="task.id" [ngClass]="{'striked': !task?.status}"><span
+                        class="badge badge-info">{{task?.date | date:'dd/MM'}}</span> - {{task?.task}}</label>
+                      <button (click)="deleteTask(task)" class="btn btn-sm btn-danger float-right"><i
+                        class="far fa-trash-alt"></i></button>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <br/>
+              <div>
+                <form [formGroup]="taskForm" (ngSubmit)="addTask()">
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" formControlName="task" placeholder="Add Task"
+                           aria-label="Add Task"
+                           aria-describedby="basic-addon2" [ngClass]="{ 'is-invalid': tsubmitted && t.task.errors }">
+                    <div class="input-group-append cursor">
+                <span class="input-group-text add-btn"
+                      id="basic-addon2" (click)="addTask()">ADD</span>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <p class="bold">Bookmarks</p>
+          <br/>
+          <div class="card">
+            <div class="card-body">
+              <div class="scrollbar scrollbox scrollbar-sidebar scrollbar-container ps ps--active-y ps--scrolling-y"
+                   style="height: 43vh;">
+                <div class="list-group ul-list scrollbox-content overflow mb-3 ox">
+                  <div class="row ml-0 mb-3" *ngFor="let book of bookmarks | orderBy : 'date': true">
+                    <div class="col-sm-1" align="center">
+                      <span class="badge badge-info mt-2">
+                        <svg class="bi bi-check-circle" width="3em" height="3em" viewBox="0 0 20 20" fill="currentColor"
+                             xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd"
+                                d="M17.354 4.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3-3a.5.5 0 11.708-.708L10 11.293l6.646-6.647a.5.5 0 01.708 0z"
+                                clip-rule="evenodd"></path>
+                          <path fill-rule="evenodd"
+                                d="M10 4.5a5.5 5.5 0 105.5 5.5.5.5 0 011 0 6.5 6.5 0 11-3.25-5.63.5.5 0 11-.5.865A5.472 5.472 0 0010 4.5z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                      </span><br/>
+                      <span class="badge badge-info">{{book.date | date:'dd/MM'}}</span>
+                    </div>
+                    <div class="col-sm-10">
+                      <h6 class="bold"> &nbsp;&nbsp;{{book?.name}}
+                      </h6>
+                      <p *ngIf="book?.desc">&nbsp;&nbsp;{{book?.desc}}</p>
+                      &nbsp;&nbsp;<a [href]="book.url" target="_blank">{{book?.url}}</a>
+                    </div>
+                    <div class="col-sm-1" align="center">
+                      <br/>
+                      <button class="btn btn-sm btn-danger" (click)="deleteBookmark(book)"><i
+                        class="far fa-trash-alt"></i></button>
+                    </div>
+                  </div>
+  
+  
+                </div>
+              </div>
+              <br/>
+              <form [formGroup]="bookmarkForm" (ngSubmit)="addBookmark()">
+                <div class="input-group mb-2">
+                  <div class="row mb-2">
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" placeholder="Bookmark Name"
+                             aria-label="Bookmark name" formControlName="name" id="name"
+                             aria-describedby="basic-addon2" [ngClass]="{ 'is-invalid': bsubmitted && b.name.errors }">
+                    </div>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control" formControlName="desc" id="desc" placeholder="Description"
+                             aria-label="Description"
+                             aria-describedby="basic-addon2">
+                    </div>
+                  </div>
+                  <div class="input-group mb-1">
+                    <input type="text" class="form-control" formControlName="url" id="url" placeholder="Add Url"
+                           aria-label="Bookmark url" [ngClass]="{ 'is-invalid': bsubmitted && b.url.errors }"
+                           aria-describedby="basic-addon2">
+                    <div class="input-group-append cursor" (click)="addBookmark()">
+                      <span class="input-group-text add-btn" id="add">ADD</span>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
